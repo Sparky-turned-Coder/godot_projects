@@ -2,7 +2,6 @@ extends Area2D
 
 const SPEED: float = 100.0
 
-
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# DisplayServer.window_set_position(Vector2(300, 300))  # Attempted to have project window open in different monitor
