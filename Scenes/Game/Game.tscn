@@ -1,10 +1,13 @@
-[gd_scene load_steps=4 format=3 uid="uid://mk0mhti5sa1g"]
+[gd_scene load_steps=6 format=3 uid="uid://mk0mhti5sa1g"]
 
+[ext_resource type="Script" uid="uid://qnvmd6devr4p" path="res://Scenes/Game/Game.gd" id="1_ln2h6"]
 [ext_resource type="Texture2D" uid="uid://b8nm72av5ilm5" path="res://assets/GameBg.png" id="1_xbxml"]
 [ext_resource type="PackedScene" uid="uid://b4avtmgv6s2jw" path="res://Scenes/Paddle/Paddle.tscn" id="2_gwu2e"]
-[ext_resource type="PackedScene" uid="uid://beraccdrdytia" path="res://Scenes/Gems/Gem.tscn" id="3_xbxml"]
+[ext_resource type="AudioStream" uid="uid://da4fn70mvmlgc" path="res://assets/bgm_action_5.mp3" id="4_ln2h6"]
+[ext_resource type="AudioStream" uid="uid://7ox6fr30l2c6" path="res://assets/spell1_0.wav" id="5_y3kpf"]
 
 [node name="Game" type="Node2D"]
+script = ExtResource("1_ln2h6")
 
 [node name="GameBg" type="Sprite2D" parent="."]
 position = Vector2(576, 324)
@@ -15,11 +18,33 @@ metadata/_edit_lock_ = true
 [node name="Paddle" parent="." instance=ExtResource("2_gwu2e")]
 position = Vector2(696, 601)
 
-[node name="Gem" parent="." instance=ExtResource("3_xbxml")]
-position = Vector2(695, 259)
+[node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
 
-[node name="Gem2" parent="." instance=ExtResource("3_xbxml")]
-position = Vector2(907, 184)
+[node name="Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_ln2h6")
+volume_db = -15.0
+autoplay = true
 
-[node name="Gem3" parent="." instance=ExtResource("3_xbxml")]
-position = Vector2(362, 154)
+[node name="ScoreSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_y3kpf")
+volume_db = -15.0
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_left = 16.0
+offset_top = 11.0
+offset_right = 98.0
+offset_bottom = 78.0
+theme_override_colors/font_color = Color(0.737255, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(0.980392, 0.972549, 0.968627, 1)
+theme_override_colors/font_outline_color = Color(0.184314, 0.592157, 0.027451, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 3
+theme_override_constants/shadow_outline_size = 5
+theme_override_font_sizes/font_size = 48
+text = "000"
+
+[connection signal="area_entered" from="Paddle" to="." method="_on_paddle_area_entered"]
+[connection signal="timeout" from="SpawnTimer" to="." method="_on_timer_timeout"]
