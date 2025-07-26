@@ -4,13 +4,12 @@ class_name Gem
 
 signal gem_off_screen
 
-
 const SPEED: float = 200.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	pass
 	# DisplayServer.window_set_position(Vector2(300, 300))  # Attempted to have project window open in different monitor
-	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -18,9 +17,9 @@ func _process(delta: float) -> void:
 # Gems falls down the screen
 	position.y += SPEED * delta
 	
-	if position.y > get_viewport_rect().end.y:  # This grabs the bottom of the viewport instead of creating a magic number
+	if position.y > Game.get_vpr().end.y:  # This grabs the bottom of the viewport instead of creating a magic number
 		emit_signal("gem_off_screen") # Or: gem_off_screen.emit()
-		print("Gem falls off.")
+		print("Game Over.")
 		die()
 
 func die() -> void:   # Later, if you want to make a fancy animation when you die, it would go here, in your DIE function
